@@ -5,6 +5,8 @@ import pygame
 import random
 import math
 from pygame import mixer
+import os
+import sys
 
 # initialize pygame
 pygame.init()
@@ -16,6 +18,9 @@ def show_score(x, y):
     score_display = score_font.render("Score: " + str(score), True, (255, 255, 255))
     screen.blit(score_display, (x, y))
 
+# initialize files path
+BASE_PATH = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+
 # game over
 game_over_font = pygame.font.Font(pygame.font.get_default_font(), 64)
 def game_over_text():
@@ -23,22 +28,22 @@ def game_over_text():
     screen.blit(game_over_display, (200, 250))
 
 # background music
-mixer.music.load('BG_musicLoop.wav')
+mixer.music.load(os.path.join(BASE_PATH, 'Assets', 'Sounds', 'BG_musicLoop.wav'))
 mixer.music.play(-1)
 
 # create game screen
 screen = pygame.display.set_mode((800, 600))
 
 # background
-background =  pygame.image.load('BG_GIF.png')
+background =  pygame.image.load(os.path.join(BASE_PATH, 'Assets', 'Images', 'BG.png'))
 
 # title and icon
 pygame.display.set_caption("Space Invaders")
-icon = pygame.image.load('ICON.png')
+icon = pygame.image.load(os.path.join(BASE_PATH, 'Assets', 'Images', 'ICON.png'))
 pygame.display.set_icon(icon)
 
 # player
-playerImg = pygame.image.load('SHIP.png')
+playerImg = pygame.image.load(os.path.join(BASE_PATH, 'Assets', 'Images', 'SHIP.png'))
 playerX = 370
 playerY = 480
 playerX_change = 0
@@ -55,7 +60,7 @@ enemyX_change = []
 enemyY_change = []
 
 for i in range(max_enemies):
-    enemyImg.append(pygame.image.load('ENEMY.png'))
+    enemyImg.append(pygame.image.load(os.path.join(BASE_PATH, 'Assets', 'Images', 'ENEMY.png')))
     enemyX.append(random.randint(0, 735))
     enemyY.append(random.randint(10, 60))
     enemyX_change.append(random.randint(1, 5))
@@ -67,7 +72,7 @@ def enemy(x, y, i):
 # bullet
 # ready - the bullet is not visible 
 # fire - the bullet is visible and moving 
-bulletImg = pygame.image.load('BULLET.png')
+bulletImg = pygame.image.load(os.path.join(BASE_PATH, 'Assets', 'Images', 'BULLET.png'))
 bulletX = 0
 bulletY = 480
 bulletX_change = 0
@@ -108,7 +113,7 @@ while running:
                 playerX_change = 4
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
-                    bullet_sound = mixer.Sound('lazerShootWAV.wav')
+                    bullet_sound = mixer.Sound(os.path.join(BASE_PATH, 'Assets', 'Sounds', 'lazerShootWAV.wav'))
                     bullet_sound.play()
                     bulletX = playerX
                     fire_bullet(bulletX, bulletY)
@@ -145,7 +150,7 @@ while running:
         # collision resolve
         collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
-            vanish_sound = mixer.Sound('EnemyHitWAV.wav')
+            vanish_sound = mixer.Sound(os.path.join(BASE_PATH, 'Assets', 'Sounds', 'EnemyHitWAV.wav'))
             vanish_sound.play()
             bulletY = 480
             bullet_state = "ready"
