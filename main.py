@@ -170,3 +170,5 @@ while running:
     show_score(scoreX, scoreY)
         
     pygame.display.update()
+    
+# pyinstaller path 'C:\Users\Carlos Henrique\AppData\Roaming\Python\Python37\Scripts'#
