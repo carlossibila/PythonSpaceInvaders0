@@ -171,4 +171,3 @@ while running:
         
     pygame.display.update()
     
-# pyinstaller path 'C:\Users\Carlos Henrique\AppData\Roaming\Python\Python37\Scripts'#
